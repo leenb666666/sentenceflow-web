@@ -1,7 +1,7 @@
 {
-  "name": "SentenceFlow · 从理解到记住",
-  "short_name": "SentenceFlow",
-  "description": "本征含义、情景辨析、主动回忆与遗忘曲线词汇学习。",
+  "name": "WordFlow 词流 · 从理解到记住",
+  "short_name": "WordFlow",
+  "description": "独立的英语词汇学习系统：本征含义、情景辨析、主动回忆与遗忘曲线。",
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#356c5e",

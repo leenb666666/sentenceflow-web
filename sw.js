@@ -1,4 +1,4 @@
-const CACHE = "sentenceflow-v2";
+const CACHE = "wordflow-v1";
 
 self.addEventListener("install", (event) => {
   const scope = self.registration.scope;
