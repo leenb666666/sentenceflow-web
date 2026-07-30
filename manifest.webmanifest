@@ -1,0 +1,12 @@
+{
+  "name": "SentenceFlow 句流英语",
+  "short_name": "SentenceFlow",
+  "description": "句子深度学习、主动回忆与间隔复习",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#f4f3ee",
+  "theme_color": "#315f59",
+  "icons": [
+    { "src": "favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
