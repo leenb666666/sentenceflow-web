@@ -1,4 +1,4 @@
-const CACHE = "sentenceflow-v1";
+const CACHE = "sentenceflow-v2";
 self.addEventListener("install", event => {
   const scope = self.registration.scope;
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll([scope, `${scope}manifest.webmanifest`, `${scope}favicon.svg`])));
