@@ -1,12 +1,43 @@
 const CACHE = "sentenceflow-v2";
-self.addEventListener("install", event => {
+
+self.addEventListener("install", (event) => {
   const scope = self.registration.scope;
-  event.waitUntil(caches.open(CACHE).then(cache => cache.addAll([scope, `${scope}manifest.webmanifest`, `${scope}favicon.svg`])));
+  event.waitUntil(
+    caches
+      .open(CACHE)
+      .then((cache) => cache.addAll([scope, `${scope}manifest.webmanifest`, `${scope}favicon.svg`]))
+      .then(() => self.skipWaiting()),
+  );
 });
-self.addEventListener("activate", event => event.waitUntil(self.clients.claim()));
-self.addEventListener("fetch", event => {
+
+self.addEventListener("activate", (event) => {
+  event.waitUntil(
+    caches
+      .keys()
+      .then((keys) => Promise.all(keys.filter((key) => key !== CACHE).map((key) => caches.delete(key))))
+      .then(() => self.clients.claim()),
+  );
+});
+
+self.addEventListener("fetch", (event) => {
   if (event.request.method !== "GET") return;
-  event.respondWith(caches.match(event.request).then(hit => hit || fetch(event.request).then(response => {
-    const copy = response.clone(); caches.open(CACHE).then(cache => cache.put(event.request, copy)); return response;
-  }).catch(() => caches.match(self.registration.scope))));
+  if (event.request.mode === "navigate") {
+    event.respondWith(
+      fetch(event.request)
+        .then((response) => {
+          const copy = response.clone();
+          caches.open(CACHE).then((cache) => cache.put(event.request, copy));
+          return response;
+        })
+        .catch(() => caches.match(event.request).then((hit) => hit || caches.match(self.registration.scope))),
+    );
+    return;
+  }
+  event.respondWith(
+    caches.match(event.request).then((hit) => hit || fetch(event.request).then((response) => {
+      const copy = response.clone();
+      caches.open(CACHE).then((cache) => cache.put(event.request, copy));
+      return response;
+    })),
+  );
 });
